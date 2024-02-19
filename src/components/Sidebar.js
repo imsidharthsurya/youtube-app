@@ -1,14 +1,15 @@
 import React from 'react'
 import {useSelector} from "react-redux"
+import {Link} from "react-router-dom"
 const Sidebar = () => {
   const showSideNavBar=useSelector((store)=>store.app.isMenuOpen)
 
   if(!showSideNavBar)return null;
   return (
     <div className='px-8 mb-3 pb-2 shadow-md'>
-      <h1>
+      <Link to="/"><h1>
         Home
-      </h1>
+      </h1></Link>
       <h1 className='mt-2'>Shorts</h1>
       <h1 className='mt-2'>Videos</h1>
       <h1 className='mt-2'>Live</h1>
