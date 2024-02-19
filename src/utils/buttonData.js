@@ -1,0 +1,1 @@
+export const btnData=["All","Javascript","Music","Mixes","Kabaddi","Film","Comedy","Databases","React","Backend","Cricket"]
