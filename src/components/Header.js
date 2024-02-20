@@ -1,9 +1,17 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import {useDispatch} from "react-redux"
 import { toggleMenu } from '../utils/sideBarSlice'
 // import {Link} from "react-router-dom"
 
 const Header = () => {
+
+  //implement search functionality using debouncing
+  const [searchQuery,setSearchQuery]=useState("");
+  useEffect(()=>{
+    console.log("useEffect api is getting called")
+  },[searchQuery])
+
+  //using redux dispatch to call an action to toggle the sidebar
   const dispatch=useDispatch();
   function handleClick(){
     dispatch(toggleMenu());
@@ -15,7 +23,7 @@ const Header = () => {
         <img alt='yt-logo' className='h-7 ml-6 cursor-pointer' src="https://vectorseek.com/wp-content/uploads/2021/01/YouTube-Logo-Vector.png"/>
       </div>
       <div className='col-span-10 ml-24'>
-        <input placeholder='Search' type='text' className='border border-gray-400 w-1/2 py-1 px-2 rounded-l-full'/>
+        <input placeholder='Search' value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} type='text' className='border border-gray-400 w-1/2 py-1 px-2 rounded-l-full'/>
         <button className='border border-gray-400 bg-gray-200 py-1 px-3 rounded-r-full'>🔍</button>
       </div>
       <div className='col-span-1'>

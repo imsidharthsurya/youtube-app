@@ -4,10 +4,10 @@ import Button from './Button'
 
 const ButtonList = () => {
   return (
-    <div className='flex ml-5'>
+    <div className='flex ml-12'>
       {
-        btnData.map((btn)=>{
-          return <Button name={btn}/>
+        btnData.map((btn,index)=>{
+          return <Button name={btn} key={index}/>
         })
       }
     </div>
