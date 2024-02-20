@@ -7,19 +7,40 @@ import {YT_SUGGESTION_URL} from "../utils/constant"
 
 const Header = () => {
 
+
   //implement search functionality using debouncing
   const [searchQuery,setSearchQuery]=useState("");
   const [suggestion,setSuggestioin]=useState([])
-  useEffect(()=>{
-    //using jsonp to call the api instead of fetch to tackle cors error
+  // console.log("render with ",suggestion)
+
+  //fn. to getsuggestion calling inside of useEffect
+  const getSuggestion=()=>{
+     //using jsonp to call the api instead of fetch to tackle cors error
+     console.log("inside api call")
     jsonp(YT_SUGGESTION_URL+searchQuery,null,(err,res)=>{
       if (err) {
         console.error('JSONP Error:', err);
+        setSuggestioin([]);
       } else {
         // setData(response);
+        // console.log(res[1])
+        setSuggestioin(res[1]);
         console.log(res[1])
       }
     })
+  }
+  useEffect(()=>{
+
+    const timer=setTimeout(()=>{
+      getSuggestion()
+    },5000)
+    
+    //this is unmount fn. whenever component is getting unmounted
+    //since on every key stroke new instance of component will be created
+    //so for old instance timer we're clearing
+    return ()=>{
+      clearTimeout(timer)
+    }
   },[searchQuery])
 
   //using redux dispatch to call an action to toggle the sidebar
