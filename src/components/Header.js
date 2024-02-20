@@ -1,14 +1,25 @@
 import React,{useEffect, useState} from 'react'
 import {useDispatch} from "react-redux"
 import { toggleMenu } from '../utils/sideBarSlice'
+import jsonp from 'jsonp';
+import {YT_SUGGESTION_URL} from "../utils/constant"
 // import {Link} from "react-router-dom"
 
 const Header = () => {
 
   //implement search functionality using debouncing
   const [searchQuery,setSearchQuery]=useState("");
+  const [suggestion,setSuggestioin]=useState([])
   useEffect(()=>{
-    console.log("useEffect api is getting called")
+    //using jsonp to call the api instead of fetch to tackle cors error
+    jsonp(YT_SUGGESTION_URL+searchQuery,null,(err,res)=>{
+      if (err) {
+        console.error('JSONP Error:', err);
+      } else {
+        // setData(response);
+        console.log(res[1])
+      }
+    })
   },[searchQuery])
 
   //using redux dispatch to call an action to toggle the sidebar
