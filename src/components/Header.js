@@ -1,16 +1,23 @@
 import React,{useEffect, useState} from 'react'
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { toggleMenu } from '../utils/sideBarSlice'
 import jsonp from 'jsonp';
 import {YT_SUGGESTION_URL} from "../utils/constant"
+import {cacheResults} from "../utils/searchSlice"
 // import {Link} from "react-router-dom"
 
 const Header = () => {
 
+  //to get the cached suggestion from redux store
+  const cachedSuggestion=useSelector((store)=>store.search)
+
+  //using redux dispatch to call an action to toggle the sidebar
+  //also for caching new suggestions which are not there in redux store
+  const dispatch=useDispatch();
 
   //implement search functionality using debouncing
   const [searchQuery,setSearchQuery]=useState("");
-  const [suggestion,setSuggestioin]=useState([])
+  const [suggestion,setSuggestion]=useState([])
   //b/c in onFocus of i/p we'll show & onblur of i/p we'll hide suggestion
   //initially don't show
   const [showSuggestion,setShowSuggestion]=useState(false);
@@ -24,11 +31,12 @@ const Header = () => {
     jsonp(YT_SUGGESTION_URL+searchQuery,null,(err,res)=>{
       if (err) {
         console.error('JSONP Error:', err);
-        setSuggestioin([]);
+        setSuggestion([]);
       } else {
-        // setData(response);
-        // console.log(res[1])
-        setSuggestioin(res[1]);
+        setSuggestion(res[1]);
+        dispatch(cacheResults({[searchQuery]:res[1]}));
+        //we're passing searchQuery inside bracke b/c it is
+        //var. & if key is var. then use it inside [].
         console.log(res[1])
       }
     })
@@ -36,7 +44,12 @@ const Header = () => {
 
   useEffect(()=>{
     const timer=setTimeout(()=>{
-      getSuggestion()
+      //if searchQuery already there in redux store ie. cache we're implementing
+      if(cachedSuggestion[searchQuery]){
+        setSuggestion(cachedSuggestion[searchQuery])
+      }else{
+        getSuggestion()
+      }
     },500)
     
     //this is unmount fn. whenever component is getting unmounted
@@ -47,8 +60,7 @@ const Header = () => {
     }
   },[searchQuery])
 
-  //using redux dispatch to call an action to toggle the sidebar
-  const dispatch=useDispatch();
+  
   function handleClick(){
     dispatch(toggleMenu());
   }
