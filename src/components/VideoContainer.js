@@ -15,7 +15,7 @@ const VideoContainer = () => {
   }
   if(videos.length===0)return <h1>Loading...</h1>
   return (
-    <div className='mt-6 flex flex-wrap ml-8'>
+    <div className='mt-6 flex flex-wrap ml-4'>
       {
         videos.map((video)=>{
           return <Link to={"/watch?v="+video.id}  key={video.id}> <VideoCard videoInfo={video}/></Link>
