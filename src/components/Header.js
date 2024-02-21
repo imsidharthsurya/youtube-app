@@ -61,17 +61,17 @@ const Header = () => {
       <div className='col-span-10 ml-24'>
         <input onFocus={()=>setShowSuggestion(true)} onBlur={()=>setShowSuggestion(false)} placeholder='Search' value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} type='text' className='border border-gray-400 w-1/2 py-1 px-2 rounded-l-full'/>
         <button className='border border-gray-400 bg-gray-200 py-1 px-3 rounded-r-full'>🔍</button>
-        <div className='absolute bg-white w-[393px] ml-1'>
-            {showSuggestion && <ul>
+        {showSuggestion &&<div className='absolute bg-white w-[393px] ml-1'>
+             <ul>
               {
                 suggestion.map((suggest)=>{
                   return <li className='shadow-sm mt-0 p-2 pl-5 rounded-md hover:bg-gray-100'>🔍 &nbsp;{suggest}</li>
                 })
               }
               
-            </ul>}
+            </ul>
 
-        </div>
+        </div>}
       
       </div>
       <div className='col-span-1'>
