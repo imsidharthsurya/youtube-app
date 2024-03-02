@@ -22,9 +22,12 @@ const WatchPage = () => {
     <div className='w-full'>
       <div className='flex w-full'>
          { isSideBar?<iframe height="400" className='rounded-lg ml-14 w-[650px]' src={"https://www.youtube.com/embed/"+videoId+"?si=JsMkRciZq9HUEETG"} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-          :<iframe height="400" className='rounded-lg ml-14 w-[700px]' src={"https://www.youtube.com/embed/"+videoId+"?si=JsMkRciZq9HUEETG"} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+          :<iframe height="420" className='rounded-lg ml-14 w-[700px]' src={"https://www.youtube.com/embed/"+videoId+"?si=JsMkRciZq9HUEETG"} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
         }
-            <LiveChatComments/>
+        <div>
+          <LiveChatComments/>
+        </div>
+            
           
       </div>
       <div className='m-5'>
